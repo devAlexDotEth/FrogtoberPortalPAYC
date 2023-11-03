@@ -20,17 +20,14 @@ const Portal: React.FC<Props> = ({ children, title, toolbar, popover }) => {
     direction='VERTICAL'
     localStyles={{
       marginTop: 86,
-      marginBottom: 94,
       backgroundImage: `linear-gradient(to right, rgb(0 0 0 / 70%), rgb(0 0 0 / 70%)), url('${background}')`,
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
-      height: '100vh',
+      backgroundAttachment: 'fixed',
+      minHeight: '100vh',
       width: '100vw',
       alignItems: 'center',
-      '@media (min-width: 1080px)': {
-        marginBottom: 50,
-      }
     }}>
 
     {/* Portal Tiles */}
