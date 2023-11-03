@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@moralisweb3/core": "^2.5.3",
     "@moralisweb3/evm-api": "^2.5.3",
     "@testing-library/jest-dom": "^5.16.4",

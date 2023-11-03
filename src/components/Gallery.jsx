@@ -3,8 +3,20 @@ import Popup from "./Popup";
 import Swal from "sweetalert2";
 import { useContext, useEffect } from "react";
 import { BlockchainContext } from "../context/BlockchainContext";
+import Tile from '../components/tile';
+import Button from '../components/button';
+import Navigation from '../components/navigation';
+import Wallet from '../components/wallet';
+import Portal from "../template/portal";
+import ChevronDown from "./icons/chevron";
 
 const Gallery = () => {
+
+  const filterClick = () => {
+    alert('Filter Dialog');
+  };
+
+
   const { connectWallet } = useContext(BlockchainContext);
   function handleConnectWallet() {
     connectWallet();
@@ -69,58 +81,71 @@ const Gallery = () => {
   };
 
   return (
-    <div className="flex flex-col z-[2]">
-      <div className="flex-1 grid gap-10 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 max-w-[60rem] max-h-[10rem] min-h-[30rem] h-[100%] w-[100%] overflow-y-auto overflow-x-hidden mb-10 mx-auto rounded-lg bg-slate-300 bg-opacity-40 p-10">
-        {unstakedNfts &&
-          unstakedNfts.tokenIds &&
-          unstakedNfts.tokenIds.map((tokenId, i) => {
-            return (
-              <div className="form-group">
-                <input type="checkbox" hidden />
-                <label className="flex justify-center items-center rounded-[1rem] cursor-pointer p-2">
-                  <img
-                    style={{
-                      border: selectedImages.includes(tokenId)
-                        ? "4px solid red"
-                        : "",
-                    }}
-                    src={unstakedNfts.metadatas[i]}
-                    alt=""
-                    onClick={() => {
-                      imageHandler(tokenId, unstakedNfts.type[i]);
-                    }}
-                    className="h-[100%] w-[100%] rounded-[1rem]"
-                  />
-                </label>
-              </div>
-            );
-          })}
-      </div>
 
-      <div className="flex-1 flex flex-col items-center justify-center my-5">
-        <p className="font-poppins font-normal text-[2rem] text-white text-center max-w-[100%] sm:max-w-[60%] mx-auto mb-5">
-          SELECT THE NFT YOU WOULD LIKE TO EXCHANGE AND CLICK THE EXCHANGE
-          BUTTON BELOW
-        </p>
-        {currentSignerAddress.toString() === "" ? (
-          <button
-            className="inline-block bg-slate-400 px-16 py-10 rounded-[1rem] font-poppins font-medium text-[2rem] leading-[1] hover:text-white"
-            onClick={handleConnectWallet}
-          >
-            Connect
-          </button>
-        ) : (
-          <button
-            className="inline-block bg-slate-400 px-16 py-10 rounded-[1rem] font-poppins font-medium text-[2rem] leading-[1] hover:text-white"
-            onClick={stakeHandler}
-          >
-            Exchange
-          </button>
-        )}
-      </div>
+    <>
+      <Navigation
+        localStyles={{ position: 'fixed', top: 0 }}
+        wallet={
+          currentSignerAddress.toString() === "" ? (
+            <Button size='M' onClick={handleConnectWallet}>Connect Wallet</Button>
+          ) : (
+            <Wallet balance={0.0389} address="0x6972b4e81673bcec5f8b4c280E6F752C800D6ED6" profile={image} />
+          )
+        }>
+        <Button as="a" variant='TERTIARY' size='M' href='https://pepeapeyachtclub.com' target="_blank">Return home</Button>
+      </Navigation>
 
-      <Popup showPopup={showPopup} setShowPopup={setShowPopup} />
-    </div>
+      <Portal
+        title="Frogtober"
+        popover={<Popup showPopup={showPopup} setShowPopup={setShowPopup} />}
+        toolbar={
+          <>
+            <Button size='S' variant='SECONDARY' active after={<ChevronDown size="S" />} onClick={filterClick}>Filter by</Button>
+            {currentSignerAddress.toString() === "" && <Button size='S' variant='PRIMARY' onClick={stakeHandler}>Exchange Selected</Button>}
+          </>
+        }
+        children={
+          <>
+            {unstakedNfts &&
+              unstakedNfts.tokenIds &&
+              unstakedNfts.tokenIds.map((tokenId, i) => {
+                return (
+                  <div className="form-group">
+                    <input type="checkbox" hidden />
+                    <label className="flex justify-center items-center rounded-[1rem] cursor-pointer p-2">
+                      {
+                        selectedImages.includes(tokenId)
+                          ?
+                          // ACTIVE TILE COMPONENT
+                          <Tile
+                            active
+                            image={unstakedNfts.metadatas[i]}
+                            title="" // We should insert the ID here
+                            onClick={() => {
+                              imageHandler(tokenId, unstakedNfts.type[i]);
+                            }}
+                          />
+                          :
+                          // INACTIVE TILE COMPONENT
+                          <Tile
+                            image={unstakedNfts.metadatas[i]}
+                            title="" // We should insert the ID here
+                            onClick={() => {
+                              imageHandler(tokenId, unstakedNfts.type[i]);
+                            }}
+                          />
+                      }
+                    </label>
+                  </div>
+                );
+              })
+            }
+          </>
+        }
+      />
+
+    </>
+
   );
 };
 
