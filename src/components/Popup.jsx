@@ -42,6 +42,7 @@ const Popup = (props) => {
         variant='PRIMARY'
         onClick={reloadPage}
         localStyles={{
+          zIndex: 1,
           position: 'absolute',
           top: 'var(--scale-24)',
           right: 'var(--scale-24)'
