@@ -1,9 +1,3 @@
-/* Existing Popover */
-
-.-translate-xy {
-  transform: translate(-50%, -50%);
-}
-
 :root {
   --dark-1000: #000000;
   --dark-500: #0F0F0F;
