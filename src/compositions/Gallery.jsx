@@ -10,8 +10,6 @@ import Wallet from '../components/wallet';
 import Portal from "../template/portal";
 import Box from "../components/box";
 
-import { render } from "../assets";
-
 const Gallery = () => {
 
   const { connectWallet } = useContext(BlockchainContext);
