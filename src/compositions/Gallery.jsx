@@ -10,6 +10,8 @@ import Wallet from '../components/wallet';
 import Portal from "../template/portal";
 import Box from "../components/box";
 
+import { render } from "../assets";
+
 const Gallery = () => {
 
   const { connectWallet } = useContext(BlockchainContext);
@@ -73,7 +75,9 @@ const Gallery = () => {
 
       <Portal
         title="Frogtober"
-        popover={<Popup showPopup={showPopup} setShowPopup={setShowPopup} />}
+        popover={
+          <Popup showPopup={showPopup} setShowPopup={setShowPopup} />
+        }
         toolbar={
           <>
             {/* ALEX NOTES: Could we look to add a filter? */}

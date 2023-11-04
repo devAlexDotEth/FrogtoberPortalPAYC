@@ -1,5 +1,30 @@
-import React, { useCallback } from "react";
+import React from "react";
+import styled from '@emotion/styled';
 import { render } from "../assets";
+import Box from "./box";
+import Button from "./button";
+
+
+const Wrapper = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: 'fit-content',
+  transform: 'translate(0, 0)',
+  width: '100vw',
+  height: '100vh',
+  background: 'var(--dark-1000)'
+}));
+
+const Video = styled.video(() => ({
+  objectFit: 'cover',
+  width: '100%',
+  height: '100%',
+}));
+
+
 
 const Popup = (props) => {
   const endPopup = async () => {
@@ -7,20 +32,28 @@ const Popup = (props) => {
     window.location.reload();
   };
 
-  return props.showPopup ? (
-    <div className="absolute z-[9] h-[100%] w-[100%] left-[50%] top-[50%] translate-[-50%, -50%] bg-slate-800 -translate-xy flex justify-center items-center">
-      <video
+  return props.showPopup &&
+    <Wrapper>
+      <Button
+        size='S'
+        variant='PRIMARY'
+        localStyles={{
+          position: 'absolute',
+          top: 'var(--scale-24)',
+          right: 'var(--scale-24)'
+        }}
+      >
+        Skip
+      </Button>
+      <Video
         id="popup_video"
         className="video object-fill h-[100%] w-[100%]"
         autoPlay
         onEnded={endPopup}
       >
         <source type="video/mp4" src={render} />
-      </video>
-    </div>
-  ) : (
-    ""
-  );
+      </Video>
+    </Wrapper>
 };
 
 export default Popup;
