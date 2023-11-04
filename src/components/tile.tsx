@@ -1,6 +1,7 @@
 import React from 'react';
 import { CSSObject } from '@emotion/react';
 import styled from '@emotion/styled';
+import Placeholder from '../assets/placeholder.png';
 
 
 type StyleProps = {
@@ -30,8 +31,8 @@ const ImageEl = styled.img`
   height: auto;
 `;
 
-const Tile: React.FC<Props> = ({ title, image, localStyles, ...props }) => {
-  return <Outer localStyles={localStyles} {...props}><ImageEl src={image} alt={title} /></Outer>;
+const Tile: React.FC<Props> = ({ title, image = Placeholder, localStyles, ...props }) => {
+  return <Outer localStyles={localStyles} {...props}><ImageEl height={169} width={169} src={image} alt={title} /></Outer>;
 };
 
 export default Tile;
