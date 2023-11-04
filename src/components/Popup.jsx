@@ -11,7 +11,6 @@ const Wrapper = styled(Box)(() => ({
   position: 'fixed',
   top: 0,
   left: 0,
-  width: 'fit-content',
   transform: 'translate(0, 0)',
   width: '100vw',
   height: '100vh',
