@@ -84,11 +84,8 @@ const Portal: React.FC<Props> = ({ children, title, toolbar, popover }) => {
             {children}
           </Grid>
         </Box>
-
         {popover}
-        
       </Box>
-      {/* GALLERY SECTION END */}
 
     </Grid>
 

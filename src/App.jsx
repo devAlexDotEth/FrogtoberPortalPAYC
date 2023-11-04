@@ -1,5 +1,5 @@
 import { Container } from './styles';
-import Gallery from "./components/Gallery";
+import Gallery from "./compositions/Gallery";
 
 const App = () => {
   return (

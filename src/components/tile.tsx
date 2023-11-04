@@ -1,36 +1,37 @@
 import React from 'react';
+import { CSSObject } from '@emotion/react';
 import styled from '@emotion/styled';
 
+
 type StyleProps = {
-  active?: boolean;
+  localStyles?: CSSObject;
 };
 
-type TileProps = {
+type Props = {
   image: string;
   title: string;
   active?: boolean;
+  localStyles?: CSSObject;
 };
 
-const Outer = styled.div(({ active }: StyleProps) => ({
-  boxSizing: 'border-box',
-  width: '100%',
-  borderRadius: 'var(--scale-8)',
-  overflow: 'hidden',
-  display: 'flex',
-  border: '4px solid rgb(0 0 0 / 10%)',
-  ...(active && {
-    border: '4px solid yellow'
-  }), 
-}));
 
+const Outer = styled.div<StyleProps>`
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: var(--scale-8);
+  overflow: hidden;
+  display: flex;
+  border: 4px solid rgb(0 0 0 / 10%);
+  ${(props) => props.localStyles};
+`;
 
 const ImageEl = styled.img`
   width: 100%;
   height: auto;
 `;
 
-const Tile: React.FC<TileProps> = ({ title, image, active }) => {
-  return <Outer active={active}><ImageEl src={image} alt={title} /></Outer>;
+const Tile: React.FC<Props> = ({ title, image, localStyles, ...props }) => {
+  return <Outer localStyles={localStyles} {...props}><ImageEl src={image} alt={title} /></Outer>;
 };
 
 export default Tile;

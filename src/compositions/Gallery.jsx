@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import Popup from "./Popup";
+import Popup from "../components/Popup";
 import Swal from "sweetalert2";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { BlockchainContext } from "../context/BlockchainContext";
 import Tile from '../components/tile';
 import Button from '../components/button';
 import Navigation from '../components/navigation';
 import Wallet from '../components/wallet';
 import Portal from "../template/portal";
-import ChevronDown from "./icons/chevron";
+import Box from "../components/box";
 
 const Gallery = () => {
 
@@ -16,44 +16,22 @@ const Gallery = () => {
     alert('Filter Dialog');
   };
 
-
   const { connectWallet } = useContext(BlockchainContext);
   function handleConnectWallet() {
     connectWallet();
   }
 
   const {
-    checkMutation,
-    stakedNfts,
     unstakedNfts,
     stake,
-    mint,
-    unstakedBalance,
-    stakedBalance,
-    totalstakedBalance,
-    holder,
-    unstake,
-    currentSigner,
     currentSignerAddress,
-    MainContract,
-    StakeContract,
   } = useContext(BlockchainContext);
 
   const [showPopup, setShowPopup] = useState(false);
 
-  const selectedImages1 = [];
   const [selectedImages, setSelectedImages] = useState([]);
   const [nftType, setNftType] = useState("");
 
-  const selectImageHandle = (imageId) => {
-    if (selectedImages.includes(imageId)) {
-      const removeImage = selectedImages.indexOf(imageId);
-      selectedImages.splice(removeImage, 1);
-    } else {
-      selectedImages.push(imageId);
-    }
-    // console.log(selectedImages);
-  };
   const imageHandler = (tokenId, type) => {
     if (selectedImages.includes(tokenId)) {
       setSelectedImages(
@@ -62,9 +40,10 @@ const Gallery = () => {
     } else {
       setSelectedImages((oldArray) => [...oldArray, tokenId]);
     }
-
     setNftType(type);
   };
+
+  {/* ALEX NOTES: How do we deprecate this popover and replace with our own? */ }
   const stakeHandler = async () => {
     if (selectedImages.length !== 1) {
       Swal.fire({
@@ -87,9 +66,10 @@ const Gallery = () => {
         localStyles={{ position: 'fixed', top: 0 }}
         wallet={
           currentSignerAddress.toString() === "" ? (
-            <Button size='M' onClick={handleConnectWallet}>Connect Wallet</Button>
+            <Button size='S' variant='PRIMARY' onClick={handleConnectWallet}>Connect Wallet</Button>
           ) : (
-            <Wallet balance={0.0389} address="0x6972b4e81673bcec5f8b4c280E6F752C800D6ED6" profile={image} />
+            // ALEX NOTES: Are there any API's we can call to add balance / address?
+            <Wallet balance={0.0389} address="0x6972b4e81673bcec5f8b4c280E6F752C800D6ED6" />
           )
         }>
         <Button as="a" variant='TERTIARY' size='M' href='https://pepeapeyachtclub.com' target="_blank">Return home</Button>
@@ -100,8 +80,18 @@ const Gallery = () => {
         popover={<Popup showPopup={showPopup} setShowPopup={setShowPopup} />}
         toolbar={
           <>
-            <Button size='S' variant='SECONDARY' active after={<ChevronDown size="S" />} onClick={filterClick}>Filter by</Button>
-            {currentSignerAddress.toString() === "" && <Button size='S' variant='PRIMARY' onClick={stakeHandler}>Exchange Selected</Button>}
+            {/* ALEX NOTES: Could we look to add a filter? */}
+            <Box localStyles={{ width: 'auto' }}>
+              {/* <Button size='S' variant='SECONDARY' active onClick={filterClick}>Filter by</Button> */}
+            </Box>
+            {currentSignerAddress.toString()
+              ?
+              <Button size='S' variant='PRIMARY' onClick={stakeHandler}>Exchange Selected</Button>
+              :
+              <Button size='S' variant='PRIMARY' disabled>Exchange Selected</Button>
+            }
+
+
           </>
         }
         children={
@@ -111,30 +101,26 @@ const Gallery = () => {
               unstakedNfts.tokenIds.map((tokenId, i) => {
                 return (
                   <div className="form-group">
-                    <input type="checkbox" hidden />
+                    <input
+                      type="checkbox"
+                      hidden
+                      onClick={() => {
+                        imageHandler(tokenId);
+                      }}
+                    />
                     <label className="flex justify-center items-center rounded-[1rem] cursor-pointer p-2">
-                      {
-                        selectedImages.includes(tokenId)
-                          ?
-                          // ACTIVE TILE COMPONENT
-                          <Tile
-                            active
-                            image={unstakedNfts.metadatas[i]}
-                            title="" // We should insert the ID here
-                            onClick={() => {
-                              imageHandler(tokenId, unstakedNfts.type[i]);
-                            }}
-                          />
-                          :
-                          // INACTIVE TILE COMPONENT
-                          <Tile
-                            image={unstakedNfts.metadatas[i]}
-                            title="" // We should insert the ID here
-                            onClick={() => {
-                              imageHandler(tokenId, unstakedNfts.type[i]);
-                            }}
-                          />
-                      }
+                      <Tile
+                        localStyles={{
+                          border: selectedImages.includes(tokenId)
+                            ? "4px solid yellow"
+                            : "",
+                        }}
+                        image={unstakedNfts.metadatas[i]}
+                        title="" // We should insert the ID here
+                        onClick={() => {
+                          imageHandler(tokenId, unstakedNfts.type[i]);
+                        }}
+                      />
                     </label>
                   </div>
                 );
