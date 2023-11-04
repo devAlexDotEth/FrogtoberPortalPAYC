@@ -50,14 +50,18 @@ const Inner = styled.div`
   background: var(--dark-1000);
   pointer-events: all;
   border-radius: var(--scale-8);
+  border: 1px solid #FFFFFF15;
+  box-shadow: 0 24px 24px 0 rgb(0 0 0 / 30%);
+  overflow: hidden;
+`;
+
+const Content = styled.div`
   padding: var(--scale-24) var(--scale-48) var(--scale-48) var(--scale-48);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: var(--scale-24);
-  border: 1px solid #FFFFFF15;
-  box-shadow: 0 24px 24px 0 rgb(0 0 0 / 30%);
 `;
 
 const Image = styled.img`
@@ -71,8 +75,10 @@ const Dialog: React.FC<Props> = ({ message, onClick }) => {
       <Outer>
         <Inner>
           <Image src={DialogHeader} alt="Please select 1 NFT" />
-          <Body size='L'>{message}</Body>
-          <Button size='M' variant="PRIMARY" onClick={onClick}>Ok</Button>
+          <Content>
+            <Body size='L'>{message}</Body>
+            <Button size='M' variant="PRIMARY" onClick={onClick}>Ok</Button>
+          </Content>
         </Inner>
       </Outer>
       <Backdrop onClick={onClick} />
