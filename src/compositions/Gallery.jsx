@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Popup from "../components/Popup";
-import Swal from "sweetalert2";
 import { useContext } from "react";
 import { BlockchainContext } from "../context/BlockchainContext";
 import Tile from '../components/tile';
@@ -9,8 +8,11 @@ import Navigation from '../components/navigation';
 import Wallet from '../components/wallet';
 import Portal from "../template/portal";
 import Box from "../components/box";
+import Dialog from "../components/dialog";
 
 const Gallery = () => {
+
+  const [isRevealed, setIsRevealed] = useState(false);
 
   const { connectWallet } = useContext(BlockchainContext);
   function handleConnectWallet() {
@@ -42,10 +44,7 @@ const Gallery = () => {
   {/* ALEX NOTES: How do we deprecate this popover and replace with our own? */ }
   const stakeHandler = async () => {
     if (selectedImages.length !== 1) {
-      Swal.fire({
-        icon: "error",
-        text: "Please select 1 NFT",
-      });
+      setIsRevealed(true);
     } else {
       let val = await stake(selectedImages, nftType);
 
@@ -57,7 +56,10 @@ const Gallery = () => {
 
   return (
 
-    <>
+    <Box localStyles={{
+      overflowY: isRevealed && "hidden",
+      height: isRevealed && "100vh"
+    }}>
       <Navigation
         localStyles={{ position: 'fixed', top: 0 }}
         wallet={
@@ -71,11 +73,14 @@ const Gallery = () => {
         <Button as="a" variant='TERTIARY' size='M' href='https://pepeapeyachtclub.com' target="_blank">Return home</Button>
       </Navigation>
 
+      {/* Dialog Error */}
+      {isRevealed && <Dialog message="Sheesh! Please select 1 NFT" onClick={() => setIsRevealed(!isRevealed)} />}
+
+      {/* Popover Exchanging */}
+      <Popup showPopup={showPopup} setShowPopup={setShowPopup} />
+
       <Portal
         title="Frogtober"
-        popover={
-          <Popup showPopup={showPopup} setShowPopup={setShowPopup} />
-        }
         toolbar={
           <>
             {/* ALEX NOTES: Could we look to add a filter? */}
@@ -88,8 +93,6 @@ const Gallery = () => {
               :
               <Button size='S' variant='PRIMARY' disabled>Exchange Selected</Button>
             }
-
-
           </>
         }
         children={
@@ -128,7 +131,7 @@ const Gallery = () => {
         }
       />
 
-    </>
+    </Box>
 
   );
 };

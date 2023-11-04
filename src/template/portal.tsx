@@ -9,12 +9,11 @@ import Box from '../components/box';
 type Props = {
   children: React.ReactNode;
   toolbar: React.ReactNode;
-  popover: React.ReactNode;
   footer: React.ReactNode;
   title: string;
 };
 
-const Portal: React.FC<Props> = ({ children, title, toolbar, popover }) => {
+const Portal: React.FC<Props> = ({ children, title, toolbar }) => {
   return (
     <Stack
     direction='VERTICAL'
@@ -25,7 +24,7 @@ const Portal: React.FC<Props> = ({ children, title, toolbar, popover }) => {
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       backgroundAttachment: 'fixed',
-      minHeight: '100vh',
+      minHeight: 'calc(100vh - 86px)',
       width: '100vw',
       alignItems: 'center',
     }}>
@@ -48,7 +47,7 @@ const Portal: React.FC<Props> = ({ children, title, toolbar, popover }) => {
       {/* HEADING */}
       <Stack direction='VERTICAL' space={'var(--scale-24)'} localStyles={{ alignItems: 'center' }}>
         <Heading level='3'>{title} Portal</Heading>
-        <Body size='M' localStyles={{ maxWidth: '60ch' }}>SELECT NFTs YOU WOULD LIKE TO SEND THROUGH PORTAL AND THEN CLICK THE EXCHANGE BUTTON</Body>
+        <Body size='M' localStyles={{ maxWidth: '60ch' }}>SELECT THE NFT YOU WOULD LIKE TO SEND THROUGH PORTAL AND THEN CLICK THE EXCHANGE BUTTON</Body>
       </Stack>
 
       {/* GALLERY SECTION */}
@@ -84,7 +83,7 @@ const Portal: React.FC<Props> = ({ children, title, toolbar, popover }) => {
             {children}
           </Grid>
         </Box>
-        {popover}
+
       </Box>
 
     </Grid>
