@@ -31,11 +31,16 @@ const Popup = (props) => {
     window.location.reload();
   };
 
+  const reloadPage = () => {
+    window.location.reload();
+  };
+
   return props.showPopup &&
     <Wrapper>
       <Button
         size='S'
         variant='PRIMARY'
+        onClick={reloadPage}
         localStyles={{
           position: 'absolute',
           top: 'var(--scale-24)',
