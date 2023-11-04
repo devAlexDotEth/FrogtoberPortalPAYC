@@ -12,10 +12,6 @@ import Box from "../components/box";
 
 const Gallery = () => {
 
-  const filterClick = () => {
-    alert('Filter Dialog');
-  };
-
   const { connectWallet } = useContext(BlockchainContext);
   function handleConnectWallet() {
     connectWallet();
@@ -82,7 +78,7 @@ const Gallery = () => {
           <>
             {/* ALEX NOTES: Could we look to add a filter? */}
             <Box localStyles={{ width: 'auto' }}>
-              {/* <Button size='S' variant='SECONDARY' active onClick={filterClick}>Filter by</Button> */}
+              {/* <Button size='S' variant='SECONDARY' active onClick={<></>}>Filter by</Button> */}
             </Box>
             {currentSignerAddress.toString()
               ?
