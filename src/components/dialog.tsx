@@ -1,19 +1,13 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
-import Body from './body';
-import Button from './button';
-import DialogHeader from "../assets/dialog-header.png";
 
 type Props = {
-  onClick?: () => void;
-  message: string;
+  children?: ReactNode;
+  image?: string;
+  backdropClose?: () => void;
 };
 
-type BackdropProps = {
-  onClick?: () => void;
-};
-
-const Backdrop = styled.button<BackdropProps>`
+const Backdrop = styled.div`
   border: none;
   padding: 0;
   margin: 0;
@@ -69,19 +63,18 @@ const Image = styled.img`
   height: auto;
 `;
 
-const Dialog: React.FC<Props> = ({ message, onClick }) => {
+const Dialog: React.FC<Props> = ({ children, image, backdropClose }) => {
   return (
     <>
       <Outer>
         <Inner>
-          <Image src={DialogHeader} alt="Please select 1 NFT" />
+          <Image src={image} alt="Banner" />
           <Content>
-            <Body size='L'>{message}</Body>
-            <Button size='M' variant="PRIMARY" onClick={onClick}>Ok</Button>
+            {children}
           </Content>
         </Inner>
       </Outer>
-      <Backdrop onClick={onClick} />
+      <Backdrop onClick={backdropClose}/>
     </>
   )
 };
