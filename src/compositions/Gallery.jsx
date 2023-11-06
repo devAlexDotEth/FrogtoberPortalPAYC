@@ -14,7 +14,7 @@ import Body from "../components/body";
 
 const Gallery = () => {
 
-  const [isRevealed, setIsRevealed] = useState(true);
+  const [isRevealed, setIsRevealed] = useState(false);
 
   const { connectWallet } = useContext(BlockchainContext);
   function handleConnectWallet() {
