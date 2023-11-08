@@ -73,7 +73,7 @@ const Gallery = () => {
             ""
           )
         }>
-        <Button as="a" variant='TERTIARY' size='M' href='https://pepeapeyachtclub.com' target="_blank">Return home</Button>
+        <Button as="a" variant='TERTIARY' size='M' href='https://www.pepeapeyachtclub.com' target="_blank">Return home</Button>
       </Navigation>
 
       {/* Dialog Error */}
