@@ -69,7 +69,8 @@ const Gallery = () => {
             <Button size='S' variant='PRIMARY' onClick={handleConnectWallet}>Connect Wallet</Button>
           ) : (
             // ALEX NOTES: Are there any API's we can call to add balance / address?
-            <Wallet balance={0.0389} address="0x6972b4e81673bcec5f8b4c280E6F752C800D6ED6" />
+            // <Wallet balance={0.0389} address="0x6972b4e81673bcec5f8b4c280E6F752C800D6ED6" />
+            ""
           )
         }>
         <Button as="a" variant='TERTIARY' size='M' href='https://pepeapeyachtclub.com' target="_blank">Return home</Button>
